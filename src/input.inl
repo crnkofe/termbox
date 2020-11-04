@@ -369,7 +369,12 @@ static int parse_bracket_esc(struct tb_event *event, const char *seq, int len) {
       res = -1;
 
     }
-
+  } else if (len == 4) { // F1-F5 Konsole
+	if (seq[0] == 27 && seq[1] == 91 && seq[2] == 91 && seq[3] >= 65 && seq[3] <= 69) {
+		event->key  = 0xFFFE + (5 - (seq[3] - 61));
+	} else {
+		res = -1; 
+	}   
   } else {
     res = -1;
   }
